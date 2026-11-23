@@ -1,0 +1,62 @@
+name: Build AI models
+
+# Converts the original Real-ESRGAN / GFPGAN weights to ONNX (tools/export_onnx.py) and
+# publishes the two big ones on the "models-v1" release, where the app downloads them.
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'tools/**', '.github/workflows/models.yml' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Already published?
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          names=$(gh api "repos/${{ github.repository }}/releases/tags/models-v1" --jq '.assets[].name' 2>/dev/null || true)
+          if echo "$names" | grep -q ultra.onnx && echo "$names" | grep -q face_gfpgan14.onnx; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "models-v1 already has both models"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.skip != 'true'
+        with:
+          python-version: '3.11'
+
+      - name: Install PyTorch (CPU) and ONNX
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q onnx onnxruntime numpy
+
+      - name: Download original weights
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          mkdir -p w
+          curl -sSLf -o w/RealESRGAN_x4plus.pth https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth
+          curl -sSLf -o w/GFPGANv1.4.pth https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
+          ls -la w
+
+      - name: Export to ONNX
+        if: steps.check.outputs.skip != 'true'
+        run: python tools/export_onnx.py w out ultra face && ls -la out
+
+      - name: Publish models-v1
+        if: steps.check.outputs.skip != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: models-v1
+          name: AI models v1
+          body: ONNX models Restro downloads on demand (fp16-stored weights). Built from Real-ESRGAN x4plus and GFPGAN 1.4 by tools/export_onnx.py.
+          files: |
+            out/ultra.onnx
+            out/face_gfpgan14.onnx

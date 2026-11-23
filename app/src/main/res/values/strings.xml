@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Restro</string>
+    <string name="tagline">AI photo restoration · on device</string>
+    <string name="appearance">Appearance</string>
+    <string name="tab_studio">Studio</string>
+    <string name="tab_library">Library</string>
+    <string name="tab_models">Models</string>
+    <string name="pick_title">Pick a photo</string>
+    <string name="pick_sub">Old, blurry, noisy or tiny. Restro upscales it to 4K and rebuilds faces, right on your phone.</string>
+    <string name="pick_btn">Choose photo</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+    <string name="restored">Restored</string>
+    <string name="share">Share</string>
+    <string name="open">Open</string>
+    <string name="mode">Restore mode</string>
+    <string name="quality">Quality</string>
+    <string name="output_size">Output size</string>
+    <string name="ai_engine">AI engine</string>
+    <string name="noise_cleanup">Noise cleanup</string>
+    <string name="face_restore">Restore faces</string>
+    <string name="face_restore_sub">GFPGAN rebuilds eyes, skin and hair</string>
+    <string name="strength">Strength</string>
+    <string name="strength_hint">Lower keeps more of the real face; higher is sharper but can look airbrushed.</string>
+    <string name="face_boost">Face detail boost</string>
+    <string name="face_boost_sub">Upscales the restored face again so it holds up at 4K</string>
+    <string name="finish">Finish</string>
+    <string name="sharpen">Sharpen</string>
+    <string name="auto_colour">Auto colour</string>
+    <string name="auto_colour_sub">Revives faded and yellowed colours</string>
+    <string name="save_as">Save as</string>
+    <string name="restore">Restore</string>
+    <string name="library_empty">Restored photos show up here.\nThey are also saved in Pictures/Restro.</string>
+</resources>
