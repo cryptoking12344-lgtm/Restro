@@ -1,0 +1,40 @@
+    NotificationRecord(0x094878e9: pkg=com.ck.restro user=UserHandle{0} id=2147483647 tag=ranker_group importance=2 key=0|com.ck.restro|2147483647|ranker_group|10192|ranker_group: Notification(channel=restore shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x710 color=0x00000000 groupKey=ranker_group vis=PRIVATE))
+      uid=10192 userId=0
+      opPkg=com.ck.restro
+      icon=Icon(typ=RESOURCE pkg=com.ck.restro id=0x7f0700bb)
+      flags=0x710
+      originalFlags=0x722
+      pri=0
+      key=0|com.ck.restro|2147483647|ranker_group|10192|ranker_group
+      seen=false
+      groupKey=0|com.ck.restro|g:ranker_group
+      notification=
+            fullscreenIntent=null
+            contentIntent=PendingIntent{5e8a96e: PendingIntentRecord{e4aff7 com.ck.restro startActivity}}
+            deleteIntent=null
+            number=0
+            groupAlertBehavior=2
+--
+                android.appInfo=ApplicationInfo (ApplicationInfo{c3d80f com.ck.restro})
+            }
+      publicNotification=
+            None
+--
+    NotificationRecord(0x09d1c09c: pkg=com.ck.restro user=UserHandle{0} id=8 tag=null importance=3 key=0|com.ck.restro|8|null|10192: Notification(channel=restore_done shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x10 color=0x00000000 vis=PRIVATE))
+      uid=10192 userId=0
+      opPkg=com.ck.restro
+      icon=Icon(typ=RESOURCE pkg=com.ck.restro id=0x7f0700bb)
+      flags=0x10
+      originalFlags=0x10
+      pri=0
+      key=0|com.ck.restro|8|null|10192
+      seen=false
+      groupKey=0|com.ck.restro|g:ranker_group
+      notification=
+            fullscreenIntent=null
+            contentIntent=PendingIntent{ba6baa5: PendingIntentRecord{ca42661 com.ck.restro startActivity (allowlist: 4383c42:+30s0ms/0/NOTIFICATION_SERVICE/NotificationManagerService)}}
+            deleteIntent=null
+            number=0
+            groupAlertBehavior=0
+--
+                android.appInfo=ApplicationInfo (ApplicationInfo{379ee7a com.ck.restro})
