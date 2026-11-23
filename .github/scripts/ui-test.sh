@@ -24,11 +24,12 @@ wait_text() {
   done
   return 1
 }
-send() {  # open a photo in Restro through the share sheet intent
-  local id
-  id=$(adb shell content query --uri content://media/external/images/media --projection _id:_display_name | grep "$1" | sed -E 's/.*_id=([0-9]+).*/\1/' | head -1)
-  adb shell am start -a android.intent.action.SEND -t image/png --eu android.intent.extra.STREAM "content://media/external/images/media/$id" -n com.ck.restro/.MainActivity
-  sleep 6
+load_photo() {  # $1 picker position (0 = newest). Opens the real Android photo picker and taps a photo.
+  top
+  if ui point id btnPick | grep -q "NOT FOUND"; then ui tap id btnChange; else ui tap id btnPick; fi
+  sleep 5; shot "picker_$1"
+  ui tap descstart "Photo" 0.5 0.5 "$1"; sleep 6
+  ui point id txtPhotoInfo
 }
 restore_and_wait() {  # $1 name, $2 timeout seconds
   bottom
@@ -54,7 +55,7 @@ bottom; shot 02_options_c
 top
 
 # 1) Quick mode (built-in Fast model), no downloads needed
-send oldphoto.jpg; shot 03_photo_loaded
+load_photo 0; shot 03_photo_loaded
 down; ui tap text Quick; sleep 1; shot 04_quick_selected
 restore_and_wait 05_quick 400
 # wipe the compare handle to the left, then zoom in
@@ -76,14 +77,14 @@ done
 
 # 3) Old photo mode: Fast + face restore (downloads GFPGAN)
 ui tap id nav_studio; sleep 2
-send family.png
+load_photo 0
 top; down; ui tap text "Old photo"; sleep 1
 bottom; ui tap id btnRestore; sleep 5; shot 09_downloading
 wait_text Restore 900; sleep 2; shot 10_downloaded
 restore_and_wait 11_oldphoto 900
 
 # 4) Portrait mode: Ultra detail + faces (downloads Ultra)
-send oldphoto.jpg
+load_photo 1
 top; down; ui tap text Portrait; sleep 1
 bottom; ui tap id btnRestore; sleep 5
 wait_text Restore 600; sleep 2

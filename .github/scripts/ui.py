@@ -49,6 +49,7 @@ def find(kind, value, index=0):
         if kind == "id" and n.get("resource-id") == PKG + value: hits.append(n)
         elif kind == "text" and (n.get("text") or "").strip() == value: hits.append(n)
         elif kind == "desc" and (n.get("content-desc") or "") == value: hits.append(n)
+        elif kind == "descstart" and (n.get("content-desc") or "").startswith(value): hits.append(n)
     return hits[index] if len(hits) > index else None
 
 def main():

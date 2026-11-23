@@ -15,6 +15,8 @@ android {
         val run = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
         versionCode = 100 + (run ?: 0)
         versionName = if (run != null) "1.0 (build $run)" else "1.0"
+        // phones are arm64; x86_64 only so the CI emulator can run it (keeps the APK small)
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
     }
 
     // One permanent signing key (kept in GitHub secrets) so new APKs install over the old one.
